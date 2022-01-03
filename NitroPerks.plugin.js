@@ -1,8 +1,8 @@
 /**
  * @name NitroPerks
- * @website https://github.com/respecting/NitroPerks
- * @source https://raw.githubusercontent.com/respecting/NitroPerks/main/NitroPerks.plugin.js
- * @updateUrl https://raw.githubusercontent.com/respecting/NitroPerks/main/NitroPerks.plugin.js
+ * @website https://github.com/YupiYT/NitroPerks
+ * @source https://raw.githubusercontent.com/YupiYT/NitroPerks/main/NitroPerks.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/YupiYT/NitroPerks/main/NitroPerks.plugin.js
  */
 /*@cc_on
 @if (@_jscript)
@@ -32,14 +32,14 @@ module.exports = (() => {
         "info": {
             "name": "NitroPerks",
             "authors": [{
-                "name": "lemons",
-                "discord_id": "407348579376693260",
-                "github_username": "respecting"
+                "name": "Yupi",
+                "discord_id": "444516092535242753",
+                "github_username": "YupiYT"
             }],
             "version": "1.3.6",
-            "description": "Unlock all screensharing modes, and use cross-server emotes & gif emotes, Discord wide! (You CANNOT upload 100MB files though. :/)",
-            "github": "https://github.com/respecting/NitroPerks",
-            "github_raw": "https://raw.githubusercontent.com/respecting/NitroPerks/main/NitroPerks.plugin.js"
+            "description": "Desbloquea todas las opciones para compartir pantalla, usa emojis en cualquier servidor y usa emojis animados",
+            "github": "https://github.com/YupiYT/NitroPerks",
+            "github_raw": "https://raw.githubusercontent.com/YupiYT/NitroPerks/main/NitroPerks.plugin.js"
         },
         "main": "NitroPerks.plugin.js"
     };
@@ -61,9 +61,9 @@ module.exports = (() => {
             return config.info.version;
         }
         load() {
-            BdApi.showConfirmationModal("Library Missing", `The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`, {
-                confirmText: "Download Now",
-                cancelText: "Cancel",
+            BdApi.showConfirmationModal("Falta una librería", `La librerúa necesaria para ${config.info.name} no está descargada. Pulsa "Descargar ahora" para descargarla.`, {
+                confirmText: "Descargar ahora",
+                cancelText: "Cancelar",
                 onConfirm: () => {
                     require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, response, body) => {
                         if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
@@ -98,21 +98,21 @@ module.exports = (() => {
                 screenShareFix;
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(_ => this.saveAndUpdate(), ...[
-                        new Settings.SettingGroup("Features").append(...[
-                            new Settings.Switch("High Quality Screensharing", "Enable or disable 1080p/source @ 60fps screensharing. This adapts to your current nitro status.", this.settings.screenSharing, value => this.settings.screenSharing = value)
+                        new Settings.SettingGroup("Características").append(...[
+                            new Settings.Switch("Compartir pantalla con alta calidad", "Habilita o deshabilita compartir pantalla en 1080p/fuente a 60 fps", this.settings.screenSharing, value => this.settings.screenSharing = value)
                         ]),
                         new Settings.SettingGroup("Emojis").append(
-                            new Settings.Switch("Nitro Emotes Bypass", "Enable or disable using the Nitro Emote bypass.", this.settings.emojiBypass, value => this.settings.emojiBypass = value),
-                            new Settings.Slider("Size", "The size of the emoji in pixels. 40 is recommended.", 16, 64, this.settings.emojiSize, size=>this.settings.emojiSize = size, {markers:[16,20,32,40,64], stickToMarkers:true})
+                            new Settings.Switch("Desbloqueo de emojis de Nitro", "Habilita o deshabilita el desbloqueo de emojis de Nitro.", this.settings.emojiBypass, value => this.settings.emojiBypass = value),
+                            new Settings.Slider("Tamaño", "El tamaño del emoji en píxeles. 40 es el tamaño recomendado.", 16, 64, this.settings.emojiSize, size=>this.settings.emojiSize = size, {markers:[16,20,32,40,64], stickToMarkers:true})
                         ),
-                            new Settings.SettingGroup("Profile Picture").append(...[
-                                new Settings.Switch("Clientsided Profile Picture", "Enable or disable clientsided profile pictures.", this.settings.clientsidePfp, value => this.settings.clientsidePfp = value),
-                                new Settings.Textbox("URL", "The direct URL that has the profile picture you want.", this.settings.pfpUrl,
+                            new Settings.SettingGroup("Imagen de perfil").append(...[
+                                new Settings.Switch("Imagen de perfil del lado del cliente", "Habilita o deshabilita las imágenes de perfil del lado del cliente.", this.settings.clientsidePfp, value => this.settings.clientsidePfp = value),
+                                new Settings.Textbox("URL", "La URL directa a la imagen/gif que quieres de perfil.", this.settings.pfpUrl,
                                     image => {
                                         try {
                                             new URL(image)
                                         } catch {
-                                            return Toasts.error('This is an invalid URL!')
+                                            return Toasts.error('¡URL inválida!')
                                         }
                                         this.settings.pfpUrl = image
                                     }
